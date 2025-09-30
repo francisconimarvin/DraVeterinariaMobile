@@ -1,4 +1,4 @@
-package com.example.draveterinaria.ui.theme
+package com.example.draveterinaria.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*

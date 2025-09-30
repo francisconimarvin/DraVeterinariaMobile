@@ -3,7 +3,7 @@ package com.example.draveterinaria.ui.screens
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.draveterinaria.ui.utils.obtenerWindowSizeClass
+import com.example.draveterinaria.utils.obtenerWindowSizeClass
 
 @Composable
 fun HomeScreen2() {

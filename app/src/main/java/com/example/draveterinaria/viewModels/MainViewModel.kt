@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel(){
     private val _navigationEvents = MutableSharedFlow<NavigationEvent>()
-    val navigationEvent: SharedFlow<NavigationEvent> = _navigationEvents.asSharedFlow()
+    val navigationEvents: SharedFlow<NavigationEvent> = _navigationEvents.asSharedFlow()
 
     fun navigateTo(screen : Screen) {
         CoroutineScope(Dispatchers.Main).launch {

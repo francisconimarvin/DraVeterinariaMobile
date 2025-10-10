@@ -22,10 +22,10 @@ import com.example.draveterinaria.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreemExtendida(){
+fun HomeScreemMediana(){
     Scaffold (
         topBar = {
-            TopAppBar(title = { Text(text="Mi App Kotlin Extendida") })
+            TopAppBar(title = { Text(text="Mi App Kotlin Mediana") })
         }
     ){
             innerPadding ->
@@ -36,7 +36,7 @@ fun HomeScreemExtendida(){
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
             Text(
-                text = "¡Bienvenido Extendida!",
+                text = "¡Bienvenido Mediana!",
                 color = MaterialTheme.colorScheme.primary,
                 style = MaterialTheme.typography.titleLarge
             )
@@ -46,7 +46,7 @@ fun HomeScreemExtendida(){
 
             Image(
                 painter = painterResource(id= R.drawable.logo),
-                contentDescription = "Logo App Extendida",
+                contentDescription = "Logo App Mediana",
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(150.dp),

@@ -1,4 +1,5 @@
 package com.example.draveterinaria.ui.screens
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,8 +22,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.draveterinaria.viewModels.MainViewModel
 import com.example.draveterinaria.navigation.Screen
+import com.example.draveterinaria.viewModels.MainViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

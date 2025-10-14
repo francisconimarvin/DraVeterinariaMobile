@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -17,21 +18,21 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.draveterinaria.navigation.NavigationEvent
 import com.example.draveterinaria.navigation.Screen
-import com.example.draveterinaria.ui.theme.PasteleriappTheme
-import com.example.draveterinaria.ui.HomeScreen
-import com.example.draveterinaria.ui.screens.LoginScreen
+//import com.example.draveterinaria.ui.HomeScreen
+//import com.example.draveterinaria.ui.screens.LoginScreen
 import com.example.draveterinaria.ui.screens.ProfileScreen
-import com.example.draveterinaria.ui.screens.SettingScreen
+//import com.example.draveterinaria.ui.screens.SettingScreen
 import com.example.draveterinaria.viewModels.MainViewModel
 import kotlinx.coroutines.flow.collectLatest
-
+import com.example.draveterinaria.ui.theme.DraVeterinariaTheme
+import com.example.draveterinaria.navigation.AppNavigation
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            PasteleriappTheme {
-                val viewModel: MainViewModel = viewModel()
+            DraVeterinariaTheme {
+                /*val viewModel: MainViewModel = viewModel()
                 val navController = rememberNavController()
 
                 LaunchedEffect(key1 = Unit) {
@@ -52,11 +53,14 @@ class MainActivity : ComponentActivity() {
                             is NavigationEvent.NavigateUp -> navController.navigateUp()
                         }
                     }
-                }
+                }*/
                 Scaffold(
                     modifier = Modifier.fillMaxSize()
                 ) { innerPadding ->
-                    NavHost(
+                    Box(Modifier.padding(innerPadding)){
+                        AppNavigation()
+                    }
+                    /*NavHost(
                         navController = navController,
                         startDestination = Screen.Login.route,
                         modifier = Modifier.padding(innerPadding)
@@ -73,7 +77,7 @@ class MainActivity : ComponentActivity() {
                         composable(route = Screen.Setting.route){
                             SettingScreen(navController = navController, viewModel = viewModel)
                         }
-                    }
+                    }*/
                 }
             }
         }
@@ -83,13 +87,11 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun GeneralPreview() {
-    PasteleriappTheme {
-
-    }
+    DraVeterinariaTheme {  }
 }
 
 // ACA ESTA LO ULTIMO QUE SE HIZO
-class MainActivity : ComponentActivity() {
+/*class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -100,20 +102,4 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-/*
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    DraVeterinariaTheme {
-        Greeting("Android")
-    }
-}*/
+*/

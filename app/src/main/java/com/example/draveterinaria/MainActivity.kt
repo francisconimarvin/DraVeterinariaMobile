@@ -25,14 +25,15 @@ import com.example.draveterinaria.ui.screens.ProfileScreen
 import com.example.draveterinaria.viewModels.MainViewModel
 import kotlinx.coroutines.flow.collectLatest
 import com.example.draveterinaria.ui.theme.DraVeterinariaTheme
-import com.example.draveterinaria.navigation.AppNavigation
+import com.example.draveterinaria.ui.screens.LoginScreen
+import com.example.draveterinaria.ui.screens.HomeScreen
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             DraVeterinariaTheme {
-                /*val viewModel: MainViewModel = viewModel()
+                val viewModel: MainViewModel = viewModel()
                 val navController = rememberNavController()
 
                 LaunchedEffect(key1 = Unit) {
@@ -53,14 +54,11 @@ class MainActivity : ComponentActivity() {
                             is NavigationEvent.NavigateUp -> navController.navigateUp()
                         }
                     }
-                }*/
+                }
                 Scaffold(
                     modifier = Modifier.fillMaxSize()
                 ) { innerPadding ->
-                    Box(Modifier.padding(innerPadding)){
-                        AppNavigation()
-                    }
-                    /*NavHost(
+                    NavHost(
                         navController = navController,
                         startDestination = Screen.Login.route,
                         modifier = Modifier.padding(innerPadding)
@@ -74,10 +72,10 @@ class MainActivity : ComponentActivity() {
                         composable(route = Screen.Profile.route){
                             ProfileScreen(navController = navController, viewModel = viewModel)
                         }
-                        composable(route = Screen.Setting.route){
+                        /*composable(route = Screen.Setting.route){
                             SettingScreen(navController = navController, viewModel = viewModel)
-                        }
-                    }*/
+                        }*/
+                    }
                 }
             }
         }

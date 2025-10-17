@@ -44,7 +44,7 @@ fun HomeScreenCompacta(){
                 Text("Presioname")
             }
             Image(
-                painter = painterResource(id = R.drawable.logo),
+                painter = painterResource(id = R.drawable.ic_launcher),
                 contentDescription = "Logo App",
                 modifier = Modifier
                     .fillMaxWidth()

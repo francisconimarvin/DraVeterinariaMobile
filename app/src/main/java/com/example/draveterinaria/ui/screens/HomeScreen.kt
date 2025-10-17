@@ -80,8 +80,8 @@ fun HomeScreen(
             ) {
                 Text(text = "¡Bienvenido a la pagina de Inicio!")
                 Spacer(modifier = Modifier.height(16.dp))
-                Button(onClick = { viewModel.navigateTo(Screen.Setting) }) {
-                    Text("Ir a Configuración")
+                Button(onClick = { viewModel.navigateTo(Screen.Profile) }) {
+                    Text("Ir a Agendamiento")
                 }
             }
         }

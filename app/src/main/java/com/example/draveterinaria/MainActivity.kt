@@ -23,10 +23,13 @@ import com.example.draveterinaria.navigation.Screen
 import com.example.draveterinaria.ui.screens.ProfileScreen
 //import com.example.draveterinaria.ui.screens.SettingScreen
 import com.example.draveterinaria.viewModels.MainViewModel
+import com.example.draveterinaria.viewModels.TutorViewModel
+import com.example.draveterinaria.viewModels.MascotaViewModel
 import kotlinx.coroutines.flow.collectLatest
 import com.example.draveterinaria.ui.theme.DraVeterinariaTheme
 import com.example.draveterinaria.ui.screens.LoginScreen
 import com.example.draveterinaria.ui.screens.HomeScreen
+import com.example.draveterinaria.ui.screens.TutorMascotaScreen
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,9 +75,17 @@ class MainActivity : ComponentActivity() {
                         composable(route = Screen.Profile.route){
                             ProfileScreen(navController = navController, viewModel = viewModel)
                         }
-                        /*composable(route = Screen.Setting.route){
-                            SettingScreen(navController = navController, viewModel = viewModel)
-                        }*/
+                        composable(route = Screen.TutorMascota.route) {
+                            // Creamos los ViewModels específicos de Tutor y Mascota
+                            val tutorViewModel: TutorViewModel = viewModel()
+                            val mascotaViewModel: MascotaViewModel = viewModel()
+
+                            TutorMascotaScreen(
+                                navController = navController,
+                                tutorViewModel = tutorViewModel,
+                                mascotaViewModel = mascotaViewModel
+                            )
+                        }
                     }
                 }
             }

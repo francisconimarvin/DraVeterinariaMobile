@@ -10,6 +10,8 @@ sealed class Screen(val route:String) {
 
     data object Setting : Screen("setting_page")
 
+    data object TutorMascota: Screen("tutor_mascota")
+
     data class Detail(val itemId: String) : Screen("detail_page/{itemId}"){
 
         fun buildRoute():String{

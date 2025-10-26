@@ -30,6 +30,10 @@ import com.example.draveterinaria.ui.theme.DraVeterinariaTheme
 import com.example.draveterinaria.ui.screens.LoginScreen
 import com.example.draveterinaria.ui.screens.HomeScreen
 import com.example.draveterinaria.ui.screens.TutorMascotaScreen
+
+import com.auth0.android.Auth0
+
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,11 +69,14 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                         startDestination = Screen.Login.route,
                         modifier = Modifier.padding(innerPadding)
-                    ){
-                        composable(route = Screen.Login.route){
+                    ) {
+                        composable(Screen.Login.route) {
                             LoginScreen(navController = navController, viewModel = viewModel)
                         }
-                        composable(route = Screen.Home.route){
+                        composable(Screen.Home.route) {
+                            HomeScreen(navController = navController, viewModel = viewModel)
+                        }
+                    composable(route = Screen.Home.route){
                             HomeScreen(navController = navController, viewModel = viewModel)
                         }
                         composable(route = Screen.Profile.route){

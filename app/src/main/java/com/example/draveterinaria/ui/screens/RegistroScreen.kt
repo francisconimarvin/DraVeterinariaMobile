@@ -56,13 +56,6 @@ fun RegistroScreen(
             onSubmit = { tutorViewModel.registrarTutor() }
         )
 
-        MascotaForm(
-            mascota = mascota,
-            onNombreChange = mascotaViewModel::onNombreChange,
-            onEspecieChange = mascotaViewModel::onEspecieChange,
-            onRazaChange = mascotaViewModel::onRazaChange,
-            onEdadChange = mascotaViewModel::onEdadChange,
-            onSubmit = { mascotaViewModel.registrarMascota() }
-        )
+
     }
 }

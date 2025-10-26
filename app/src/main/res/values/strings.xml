@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">DraVeterinaria</string>
+
+    <!-- Auth0 -->
+    <string name="auth0_client_id">TrgumAiEAT5ZnJsnSK8DKA0EkZNj6mJr</string>
+    <string name="auth0_domain">dev-3log5xxbg3n3rw3h.us.auth0.com</string>
 </resources>

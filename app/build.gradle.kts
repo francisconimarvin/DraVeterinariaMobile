@@ -16,6 +16,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        manifestPlaceholders["auth0Domain"] = "dev-3log5xxbg3n3rw3h.us.auth0.com"
+        manifestPlaceholders["auth0Scheme"] = "demo"
+
     }
 
     buildTypes {
@@ -68,4 +72,6 @@ dependencies {
 // Extensiones de Lifecycle para corrutinas (ya las usás indirectamente, pero aseguran compatibilidad)
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")
+
+    implementation("com.auth0.android:auth0:3.10.0")
 }

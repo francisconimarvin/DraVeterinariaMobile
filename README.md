@@ -1,5 +1,8 @@
 # DraVeterinariaMobile
 Aplicación móvil del sistema DraVeterinaria
+Desarrollado por:
+Marvin Francisconi
+Sebastian Vélez
 es una aplicación móvil desarrollada en Kotlin usando Android Studio que permite a los usuarios gestionar la información de sus mascotas y programar citas o recordatorios importantes relacionados con su cuidado.
 
 # Características principales
@@ -10,13 +13,8 @@ es una aplicación móvil desarrollada en Kotlin usando Android Studio que permi
 
 3. Agenda de citas: Crear y gestionar citas para veterinario, vacunas, baños, entre otros.
 
-4. Recordatorios: Notificaciones para eventos importantes de cada mascota.
+4. Interfaz intuitiva: Navegación fluida con Jetpack Compose y formularios validados.
 
-5. Almacenamiento local: Guarda los datos de manera persistente usando Room Database.
-
-6. Interfaz intuitiva: Navegación fluida con Jetpack Compose y formularios validados.
-
-7. Animaciones y recursos nativos: Uso de animaciones y elementos visuales para mejorar la experiencia del usuario.
 
 # Tecnologías utilizadas
 

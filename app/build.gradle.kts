@@ -65,6 +65,20 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
+    implementation("org.hibernate.orm:hibernate-core:6.4.4.Final")
+    implementation("jakarta.persistence:jakarta.persistence-api:3.1.0")
+    implementation("jakarta.validation:jakarta.validation-api:3.0.2")
+
+    // 2. Implementación de referencia (ej. Hibernate Validator)
+    implementation("org.hibernate.validator:hibernate-validator:8.0.1.Final")
+
+    // Módulo principal de Jackson para manejo de JSON
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.16.1")
+
+    // Opcional: Para el manejo de tipos de fecha de Java 8 (LocalDate, ZonedDateTime)
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.16.1")
+
+
     // Corrutinas para ViewModel y flujo de datos
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")

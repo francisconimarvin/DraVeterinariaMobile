@@ -44,7 +44,7 @@ fun ServicioForm(
                 onSelect = onSubtipoChange
             )
 
-            // Fecha (Usarías un DatePicker, por simplicidad usamos texto)
+
             OutlinedTextField(
                 value = servicioInput.fecha,
                 onValueChange = onFechaChange,

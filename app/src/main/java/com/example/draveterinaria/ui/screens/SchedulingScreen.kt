@@ -54,7 +54,7 @@ fun SchedulingScreen(
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Aquí puedes agregar un componente visual para el progreso (ej. un Row con iconos de pasos)
+
 
             when (currentStep) {
                 1 -> MascotaForm(

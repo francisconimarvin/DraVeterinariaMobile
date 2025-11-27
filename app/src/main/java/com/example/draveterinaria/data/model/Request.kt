@@ -13,8 +13,8 @@ data class TutorRequest(
 )
 
 data class TutorResponse(
-    val idTutor: Long // CLAVE: Se usa para el siguiente POST
-    // Puedes incluir más campos si tu API los devuelve, pero el idTutor es el esencial aquí.
+    val idTutor: Long
+
 )
 
 // Para POST /api/mascotas
@@ -38,6 +38,6 @@ data class MascotaResponse(
 data class ServicioRequest(
     val mascota: MascotaIdWrapper,
     val subtipo: SubtipoIdWrapper,
-    val costo: Double, // Usar Double o Int según el tipo de dato de 'precio'
-    val fecha: String // Contiene la fecha con el "T10:00:00" que agregas
+    val costo: Double,
+    val fecha: String
 )

@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 
 class SchedulingViewModel(
     private val repository: SchedulingRepository = SchedulingRepository()
-    // Idealmente inyectado con Dagger/Hilt, pero lo inicializamos aquí por simplicidad
+
 ) : ViewModel() {
 
     // ------------------- ESTADO DE LA UI Y FORMULARIO -------------------
@@ -63,8 +63,8 @@ class SchedulingViewModel(
         }
     }
 
-    // ------------------- MANEJODE ERRORES -----------------------------------------
-    // 1. Estado para almacenar los errores de validación (clave: nombre del campo, valor: mensaje de error)
+    // ------------------- MANEJO DE ERRORES -----------------------------------------
+
     private val _validationErrors = MutableStateFlow<Map<String, String>>(emptyMap())
     val validationErrors = _validationErrors.asStateFlow()
 
@@ -94,7 +94,7 @@ class SchedulingViewModel(
         val errors = mutableMapOf<String, String>()
         val input = _tutorInput.value
 
-        // Puedes usar la función del sistema Android para emails (requiere el import)
+
         if (input.email.isBlank() || !android.util.Patterns.EMAIL_ADDRESS.matcher(input.email).matches()) errors["email"] = "Email inválido o incompleto."
         if (input.rut.isBlank() || input.rut.length < 9) errors["rut"] = "RUT inválido o incompleto." // Validación simple
         if (input.nombre.isBlank()) errors["nombre"] = "El primer nombre es obligatorio."

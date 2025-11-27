@@ -1,10 +1,10 @@
 package com.example.draveterinaria.data.remote
 
-import com.example.draveterinaria.data.model.* // Tus Data Classes
+import com.example.draveterinaria.data.model.*
 import retrofit2.http.*
 interface SchedulingApiService {
 
-    // ----------------- Peticiones GET (Carga de Datos Iniciales) -----------------
+
 
     @GET("api/tipos-servicio")
     suspend fun getTiposServicio(): List<TipoServicioResponse>
@@ -16,7 +16,7 @@ interface SchedulingApiService {
     @GET("api/subtipos-servicio/tipo/{idTipo}")
     suspend fun getSubtiposByTipo(@Path("idTipo") idTipo: Long): List<SubtipoServicioResponse>
 
-    // ----------------- Peticiones POST (Transacción Secuencial) -----------------
+
 
     @POST("api/tutores")
     suspend fun createTutor(@Body tutor: TutorRequest): TutorResponse

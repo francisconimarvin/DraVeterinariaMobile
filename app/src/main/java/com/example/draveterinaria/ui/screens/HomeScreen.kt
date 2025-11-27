@@ -102,7 +102,7 @@ fun HomeScreen(
                     title = "Agendar cita",
                     description = "Reserva atención para tu mascota",
                     icon = { Icon(Icons.Default.Menu, contentDescription = null) },
-                    onClick = { viewModel.navigateTo(Screen.TutorMascota) }
+                    onClick = { viewModel.navigateTo(Screen.Scheduling) }
                 )
 
                 CardItem(

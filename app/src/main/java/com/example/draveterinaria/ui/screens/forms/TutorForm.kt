@@ -5,51 +5,106 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.draveterinaria.data.model.Tutor
+import com.example.draveterinaria.data.model.TutorInput
+import com.example.draveterinaria.ui.components.ErrorText // Importar el componente
 
 @Composable
 fun TutorForm(
-    tutor: Tutor,
-    registrado: Boolean,
-    onNombreChange: (String) -> Unit,
-    onCorreoChange: (String) -> Unit,
-    onTelefonoChange: (String) -> Unit,
-    onSubmit: () -> Unit
+    tutorInput: TutorInput,
+    errors: Map<String, String>, // Recibe los errores del ViewModel
+    onValueChange: (TutorInput) -> Unit,
+    onNext: () -> Unit, // Llama a validateTutor() y navega
+    onBack: () -> Unit
 ) {
     Card(modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text("Datos del Tutor", style = MaterialTheme.typography.titleMedium)
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Text("2. Datos del Tutor", style = MaterialTheme.typography.titleLarge)
+            Spacer(Modifier.height(4.dp))
 
+            // RUT
             OutlinedTextField(
-                value = tutor.nombre,
-                onValueChange = onNombreChange,
-                label = { Text("Nombre") },
+                value = tutorInput.rut,
+                onValueChange = { onValueChange(tutorInput.copy(rut = it)) },
+                label = { Text("RUT (Ej: 12345678-9)") },
                 modifier = Modifier.fillMaxWidth(),
-                enabled = !registrado
+                isError = errors.containsKey("rut")
+            )
+            ErrorText(errors, "rut")
+
+            // Nombre
+            OutlinedTextField(
+                value = tutorInput.nombre,
+                onValueChange = { onValueChange(tutorInput.copy(nombre = it)) },
+                label = { Text("Primer Nombre") },
+                modifier = Modifier.fillMaxWidth(),
+                isError = errors.containsKey("nombre")
+            )
+            ErrorText(errors, "nombre")
+
+            // Snombre
+            OutlinedTextField(
+                value = tutorInput.snombre,
+                onValueChange = { onValueChange(tutorInput.copy(snombre = it)) },
+                label = { Text("Segundo Nombre (Opcional)") },
+                modifier = Modifier.fillMaxWidth()
+            )
+            // Snombre no es obligatorio, no necesita ErrorText
+
+            // Apellido Paterno
+            OutlinedTextField(
+                value = tutorInput.apaterno,
+                onValueChange = { onValueChange(tutorInput.copy(apaterno = it)) },
+                label = { Text("Apellido Paterno") },
+                modifier = Modifier.fillMaxWidth(),
+                isError = errors.containsKey("apaterno")
+            )
+            ErrorText(errors, "apaterno")
+
+            // Apellido Materno
+            OutlinedTextField(
+                value = tutorInput.amaterno,
+                onValueChange = { onValueChange(tutorInput.copy(amaterno = it)) },
+                label = { Text("Apellido Materno (Opcional)") },
+                modifier = Modifier.fillMaxWidth()
             )
 
+            // Teléfono
             OutlinedTextField(
-                value = tutor.correo,
-                onValueChange = onCorreoChange,
-                label = { Text("Correo") },
-                modifier = Modifier.fillMaxWidth(),
-                enabled = !registrado
-            )
-
-            OutlinedTextField(
-                value = tutor.telefono,
-                onValueChange = onTelefonoChange,
+                value = tutorInput.telefono,
+                onValueChange = { onValueChange(tutorInput.copy(telefono = it)) },
                 label = { Text("Teléfono") },
                 modifier = Modifier.fillMaxWidth(),
-                enabled = !registrado
+                isError = errors.containsKey("telefono")
             )
+            ErrorText(errors, "telefono")
 
-            if (!registrado) {
-                Button(onClick = onSubmit, modifier = Modifier.fillMaxWidth()) {
-                    Text("Registrar Tutor")
-                }
-            } else {
-                Text("✅ Tutor registrado", color = MaterialTheme.colorScheme.primary)
+            // Dirección
+            OutlinedTextField(
+                value = tutorInput.direccion,
+                onValueChange = { onValueChange(tutorInput.copy(direccion = it)) },
+                label = { Text("Dirección") },
+                modifier = Modifier.fillMaxWidth(),
+                isError = errors.containsKey("direccion")
+            )
+            ErrorText(errors, "direccion")
+
+            // Email
+            OutlinedTextField(
+                value = tutorInput.email,
+                onValueChange = { onValueChange(tutorInput.copy(email = it)) },
+                label = { Text("Email") },
+                modifier = Modifier.fillMaxWidth(),
+                isError = errors.containsKey("email")
+            )
+            ErrorText(errors, "email")
+
+            Spacer(Modifier.height(8.dp))
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Button(onClick = onBack) { Text("Atrás") }
+                Button(onClick = onNext) { Text("Siguiente (Servicio)") }
             }
         }
     }

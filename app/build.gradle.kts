@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+
 }
 
 android {
@@ -57,6 +58,8 @@ dependencies {
     implementation(libs.androidx.compose.material3.window.size.class1)
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.navigation.compose)
+
+    // --- Testing ---
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -65,27 +68,24 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
-    implementation("org.hibernate.orm:hibernate-core:6.4.4.Final")
-    implementation("jakarta.persistence:jakarta.persistence-api:3.1.0")
-    implementation("jakarta.validation:jakarta.validation-api:3.0.2")
-
-    // 2. Implementación de referencia (ej. Hibernate Validator)
-    implementation("org.hibernate.validator:hibernate-validator:8.0.1.Final")
-
-    // Módulo principal de Jackson para manejo de JSON
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.16.1")
-
-    // Opcional: Para el manejo de tipos de fecha de Java 8 (LocalDate, ZonedDateTime)
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.16.1")
-
-
-    // Corrutinas para ViewModel y flujo de datos
+    // --- Corrutinas (Correctas para Android) ---
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
 
-// Extensiones de Lifecycle para corrutinas (ya las usás indirectamente, pero aseguran compatibilidad)
+    // --- Lifecycle KTX (Correctas para Android) ---
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")
 
+    // --- Auth0 (Correcto para Android) ---
     implementation("com.auth0.android:auth0:3.10.0")
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+// Si usas Moshi para serialización (recomendado por Kotlin/Square):
+// implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+// implementation("com.squareup.moshi:moshi-kotlin:1.15.1")
+
+// OkHttp Logging Interceptor (útil para ver peticiones/respuestas en el logcat)
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 }

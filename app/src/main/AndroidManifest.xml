@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.draveterinaria">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,7 +13,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DraVeterinaria">
+        android:theme="@style/Theme.DraVeterinaria"
+
+        android:usesCleartextTraffic="true">
 
         <activity
             android:name=".MainActivity"
@@ -19,14 +23,10 @@
             android:label="@string/app_name"
             android:theme="@style/Theme.DraVeterinaria">
 
-            <!-- Activity principal -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-            <!-- Intent filter para Auth0 -->
-
 
         </activity>
 

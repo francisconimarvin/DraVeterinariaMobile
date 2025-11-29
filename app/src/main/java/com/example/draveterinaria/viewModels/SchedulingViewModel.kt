@@ -6,9 +6,11 @@ import com.example.draveterinaria.data.model.* // Modelos Input y Response
 import com.example.draveterinaria.data.repository.SchedulingRepository
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import com.example.draveterinaria.utils.EmailValidator
 
 class SchedulingViewModel(
-    private val repository: SchedulingRepository = SchedulingRepository()
+    private val repository: SchedulingRepository = SchedulingRepository(),
+    private val emailValidator: EmailValidator
 
 ) : ViewModel() {
 
@@ -95,7 +97,7 @@ class SchedulingViewModel(
         val input = _tutorInput.value
 
 
-        if (input.email.isBlank() || !android.util.Patterns.EMAIL_ADDRESS.matcher(input.email).matches()) errors["email"] = "Email inválido o incompleto."
+        if (input.email.isBlank() || !emailValidator.isValid(input.email)) errors["email"] = "Email inválido o incompleto."
         if (input.rut.isBlank() || input.rut.length < 9) errors["rut"] = "RUT inválido o incompleto." // Validación simple
         if (input.nombre.isBlank()) errors["nombre"] = "El primer nombre es obligatorio."
         if (input.apaterno.isBlank()) errors["apaterno"] = "El apellido paterno es obligatorio."

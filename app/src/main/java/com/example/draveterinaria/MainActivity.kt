@@ -28,6 +28,10 @@ import com.example.draveterinaria.viewModels.SchedulingViewModel
 import com.example.draveterinaria.ui.theme.DraVeterinariaTheme
 import kotlinx.coroutines.flow.collectLatest
 
+import com.example.draveterinaria.data.repository.SchedulingRepository
+import com.example.draveterinaria.utils.AndroidEmailValidator
+import com.example.draveterinaria.viewModels.SchedulingViewModelFactory
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +42,19 @@ class MainActivity : ComponentActivity() {
                 val viewModel: MainViewModel = viewModel()
                 val navController = rememberNavController()
                 val snackbarHostState = remember { SnackbarHostState() }
+
+                // ⭐️ INICIALIZACIÓN DE DEPENDENCIAS GLOBALES DEL SCHEDULING
+                // (Esto solo se hace una vez y se reutiliza)
+                val schedulingRepository = remember { SchedulingRepository() }
+                val emailValidator = remember { AndroidEmailValidator() }
+
+                // ⭐️ CREACIÓN DEL FACTORY UNA SOLA VEZ
+                val schedulingFactory = remember {
+                    SchedulingViewModelFactory(
+                        repository = schedulingRepository,
+                        emailValidator = emailValidator
+                    )
+                }
 
                 LaunchedEffect(key1 = Unit) {
                     viewModel.navigationEvents.collectLatest { event ->
@@ -61,7 +78,7 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
 
-                ) { innerPadding ->
+                    ) { innerPadding ->
                     NavHost(
                         navController = navController,
                         startDestination = Screen.Login.route,
@@ -73,20 +90,19 @@ class MainActivity : ComponentActivity() {
                         composable(Screen.Home.route) {
                             HomeScreen(navController = navController, viewModel = viewModel)
                         }
-                        // La línea duplicada de Screen.Home.route ha sido eliminada.
                         composable(route = Screen.Profile.route){
                             ProfileScreen(navController = navController, viewModel = viewModel)
                         }
 
 
                         composable(route = Screen.Scheduling.route) {
-                            // Instanciamos el ViewModel que maneja todo el flujo
-                            val schedulingViewModel: SchedulingViewModel = viewModel()
+                            // ⭐️ USO DEL FACTORY: Pasamos el factory al composable viewModel()
+                            val schedulingViewModel: SchedulingViewModel = viewModel(
+                                factory = schedulingFactory
+                            )
 
                             SchedulingScreen(
-                                // Pasamos el ViewModel instanciado
                                 viewModel = schedulingViewModel,
-                                // Pasamos el estado del Snackbar
                                 snackbarHostState = snackbarHostState
                             )
                         }
@@ -102,17 +118,3 @@ class MainActivity : ComponentActivity() {
 fun GeneralPreview() {
     DraVeterinariaTheme {  }
 }
-
-// ACA ESTA LO ULTIMO QUE SE HIZO
-/*class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-
-            DraVeterinariaTheme {
-                HomeScreenCompacta()
-            }
-        }
-    }
-}
-*/

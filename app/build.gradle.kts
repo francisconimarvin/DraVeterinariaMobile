@@ -88,4 +88,15 @@ dependencies {
 
 // OkHttp Logging Interceptor (útil para ver peticiones/respuestas en el logcat)
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+
+    testImplementation(libs.junit)
+
+  // ================ TESTING ============================ //
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
+    androidTestImplementation(libs.androidx.junit)
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+    testImplementation("io.mockk:mockk:1.13.5")
+
 }

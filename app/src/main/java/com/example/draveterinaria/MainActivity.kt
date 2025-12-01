@@ -42,13 +42,10 @@ class MainActivity : ComponentActivity() {
                 val viewModel: MainViewModel = viewModel()
                 val navController = rememberNavController()
                 val snackbarHostState = remember { SnackbarHostState() }
-
-                // ⭐️ INICIALIZACIÓN DE DEPENDENCIAS GLOBALES DEL SCHEDULING
-                // (Esto solo se hace una vez y se reutiliza)
                 val schedulingRepository = remember { SchedulingRepository() }
                 val emailValidator = remember { AndroidEmailValidator() }
 
-                // ⭐️ CREACIÓN DEL FACTORY UNA SOLA VEZ
+
                 val schedulingFactory = remember {
                     SchedulingViewModelFactory(
                         repository = schedulingRepository,
@@ -96,7 +93,7 @@ class MainActivity : ComponentActivity() {
 
 
                         composable(route = Screen.Scheduling.route) {
-                            // ⭐️ USO DEL FACTORY: Pasamos el factory al composable viewModel()
+
                             val schedulingViewModel: SchedulingViewModel = viewModel(
                                 factory = schedulingFactory
                             )

@@ -29,7 +29,7 @@ class MainViewModel : ViewModel() {
     private val _loginStatus = MutableStateFlow<LoginState>(LoginState.Idle)
     val loginStatus: StateFlow<LoginState> = _loginStatus.asStateFlow()
 
-    // ⭐️ Functión para llamar al API ⭐️
+
     /**
      * Intenta iniciar sesión con el email y la contraseña.
      * Gestiona el estado de carga, éxito y error.

@@ -29,7 +29,7 @@ class SchedulingViewModelTest {
     // Mock del Repositorio
     private val mockRepository = mockk<SchedulingRepository>()
 
-    // ⭐️ CAMBIO CLAVE 1: Mock del Validador de Email
+
     private val mockEmailValidator = mockk<EmailValidator>()
 
     private lateinit var viewModel: SchedulingViewModel
@@ -48,18 +48,15 @@ class SchedulingViewModelTest {
         coEvery { mockRepository.fetchEspecies() } returns testEspecies
         coEvery { mockRepository.fetchTiposServicio() } returns testTipos
 
-        // ⭐️ CAMBIO CLAVE 2: Mockear el comportamiento del EmailValidator
-        // Hacemos que funcione para el caso válido y que falle para el caso inválido.
-        // Se asume que en el caso válido usamos "test@ejemplo.com"
+
         coEvery { mockEmailValidator.isValid("test@ejemplo.com") } returns true
-        // Se asume que en el caso inválido usamos "email_invalido"
         coEvery { mockEmailValidator.isValid("email_invalido") } returns false
 
 
         // 3. Crear el ViewModel, inyectando ambos Mocks
         viewModel = SchedulingViewModel(
             repository = mockRepository,
-            emailValidator = mockEmailValidator // ⭐️ Inyectar el mock aquí
+            emailValidator = mockEmailValidator
         )
 
         // 4. Ejecutar las coroutines de inicialización (loadInitialData)
@@ -163,11 +160,10 @@ class SchedulingViewModelTest {
         // Verificar el número total de errores (6 errores)
         assertEquals(6, viewModel.validationErrors.first().size)
 
-        // ⭐️ CORRECCIONES EN MENSAJES:
-        // El mensaje de email sigue siendo el que esperaba el código original.
+
         assertEquals("Email inválido o incompleto.", viewModel.validationErrors.first()["email"])
 
-        // ⭐️ CORRECCIÓN CRÍTICA: Se usa el mensaje real que causó el ComparisonFailure:
+
         assertEquals("El formato de RUT es inválido (ej: 19.876.543-K).", viewModel.validationErrors.first()["rut"])
 
         assertEquals("El primer nombre es obligatorio.", viewModel.validationErrors.first()["nombre"])

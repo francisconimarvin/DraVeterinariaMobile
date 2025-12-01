@@ -32,7 +32,7 @@ object RetrofitClient {
     // 1. Instancia para LoginAPI (Puerto 8095)
     private val loginRetrofit: Retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl(BASE_URL_LOGIN) // ⭐️ Usa el puerto 8095 ⭐️
+            .baseUrl(BASE_URL_LOGIN)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
@@ -41,7 +41,7 @@ object RetrofitClient {
     // 2. Instancia para SchedulingAPI (Puerto 8090)
     private val schedulingRetrofit: Retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl(BASE_URL_SCHEDULING) // ⭐️ Usa el puerto 8090 ⭐️
+            .baseUrl(BASE_URL_SCHEDULING)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()

@@ -1,8 +1,8 @@
-package com.example.draveterinaria.viewModels // ⭐️ CAMBIO: Mover el paquete a viewModels
+package com.example.draveterinaria.viewModels
 
 import com.example.draveterinaria.data.model.*
 import com.example.draveterinaria.data.repository.SchedulingRepository
-import com.example.draveterinaria.utils.EmailValidator // ⭐️ Nuevo: Importar la interfaz
+import com.example.draveterinaria.utils.EmailValidator
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
@@ -128,7 +128,7 @@ class SchedulingViewModelTest {
 
         val validTutor = TutorInput(
             email = "test@ejemplo.com", // Validez controlada por el mock
-            rut = "12345678-9",
+            rut = "12.345.678-9",
             nombre = "Juan",
             snombre = "", // Añadido
             apaterno = "Perez",
@@ -144,29 +144,32 @@ class SchedulingViewModelTest {
 
     @Test
     fun validateTutor_withInvalidEmailAndShortRut_returnsFalse() = runTest {
-        // El Mock garantiza que "email_invalido" es considerado inválido (returns false)
-
+        // El email falla porque el mock devuelve 'false' para "email_invalido"
         val invalidTutor = TutorInput(
             email = "email_invalido", // Falla (Mock devuelve false)
-            rut = "123", // Falla (largo < 9)
-            nombre = "", // Falla
-            snombre = "", // Añadido
-            apaterno = "", // Falla
+            rut = "12345678-9",       // Falla (le faltan los puntos para la RUT_REGEX estricta)
+            nombre = "",              // Falla
+            snombre = "",
+            apaterno = "",            // Falla
             amaterno = "Lopez",
-            telefono = "123", // Falla (largo < 8)
-            direccion = "" // Falla
+            telefono = "123",         // Falla (largo < 8)
+            direccion = ""            // Falla
         )
         viewModel.updateTutorInput(invalidTutor)
         val result = viewModel.validateTutor()
 
         assertFalse(result)
 
-        // Verificar el número total de errores (6 errores como se definió en la validación)
+        // Verificar el número total de errores (6 errores)
         assertEquals(6, viewModel.validationErrors.first().size)
 
-        // Verificar mensajes:
+        // ⭐️ CORRECCIONES EN MENSAJES:
+        // El mensaje de email sigue siendo el que esperaba el código original.
         assertEquals("Email inválido o incompleto.", viewModel.validationErrors.first()["email"])
-        assertEquals("RUT inválido o incompleto.", viewModel.validationErrors.first()["rut"])
+
+        // ⭐️ CORRECCIÓN CRÍTICA: Se usa el mensaje real que causó el ComparisonFailure:
+        assertEquals("El formato de RUT es inválido (ej: 19.876.543-K).", viewModel.validationErrors.first()["rut"])
+
         assertEquals("El primer nombre es obligatorio.", viewModel.validationErrors.first()["nombre"])
         assertEquals("El apellido paterno es obligatorio.", viewModel.validationErrors.first()["apaterno"])
         assertEquals("Teléfono inválido.", viewModel.validationErrors.first()["telefono"])

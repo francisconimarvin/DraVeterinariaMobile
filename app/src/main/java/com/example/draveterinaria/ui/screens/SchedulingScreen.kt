@@ -12,7 +12,8 @@ import com.example.draveterinaria.ui.screens.forms.TutorForm
 import com.example.draveterinaria.ui.screens.forms.ServicioForm
 import com.example.draveterinaria.viewModels.SchedulingViewModel
 import kotlinx.coroutines.flow.collectLatest
-
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
 @Composable
 fun SchedulingScreen(
     viewModel: SchedulingViewModel = viewModel(),
@@ -51,7 +52,8 @@ fun SchedulingScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(16.dp),
+                .padding(16.dp)
+            .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 

@@ -22,7 +22,7 @@ import com.example.draveterinaria.navigation.Screen
 import com.example.draveterinaria.ui.screens.HomeScreen
 import com.example.draveterinaria.ui.screens.LoginScreen
 import com.example.draveterinaria.ui.screens.ProfileScreen
-import com.example.draveterinaria.ui.screens.SchedulingScreen // ⭐️ Importar la pantalla de agendamiento
+import com.example.draveterinaria.ui.screens.SchedulingScreen
 import com.example.draveterinaria.viewModels.MainViewModel
 import com.example.draveterinaria.viewModels.SchedulingViewModel
 import com.example.draveterinaria.ui.theme.DraVeterinariaTheme

@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import com.example.draveterinaria.utils.EmailValidator
 
+
+private val RUT_REGEX = Regex("^\\d{1,2}\\.\\d{3}\\.\\d{3}-[0-9Kk]\$")
 class SchedulingViewModel(
     private val repository: SchedulingRepository = SchedulingRepository(),
     private val emailValidator: EmailValidator
@@ -97,8 +99,12 @@ class SchedulingViewModel(
         val input = _tutorInput.value
 
 
-        if (input.email.isBlank() || !emailValidator.isValid(input.email)) errors["email"] = "Email inválido o incompleto."
-        if (input.rut.isBlank() || input.rut.length < 9) errors["rut"] = "RUT inválido o incompleto." // Validación simple
+        if (input.email.isBlank() || !emailValidator.isValid(input.email))errors["email"] = "Email inválido o incompleto."
+        if (input.rut.isBlank()) {
+            errors["rut"] = "El RUT es obligatorio."
+        } else if (!input.rut.matches(RUT_REGEX)) {
+            errors["rut"] = "El formato de RUT es inválido (ej: 19.876.543-K)."
+        }
         if (input.nombre.isBlank()) errors["nombre"] = "El primer nombre es obligatorio."
         if (input.apaterno.isBlank()) errors["apaterno"] = "El apellido paterno es obligatorio."
         if (input.telefono.isBlank() || input.telefono.length < 8) errors["telefono"] = "Teléfono inválido."
@@ -107,7 +113,7 @@ class SchedulingViewModel(
         _validationErrors.value = errors
         return errors.isEmpty()
     }
-    // ------------------- MANEJO DE CAMBIOS (on*Change en React) -------------------
+    // ------------------- MANEJO DE CAMBIOS  -------------------
 
     // Ejemplo de Mascota
     fun onMascotaNombreChange(value: String) {
@@ -129,12 +135,12 @@ class SchedulingViewModel(
     }
 
     fun updateMascotaInput(input: MascotaInput) {
-        _mascotaInput.value = input // O usar _mascotaInput.update { input }
+        _mascotaInput.value = input
     }
 
     // Función para actualizar el estado COMPLETO del TutorInput
     fun updateTutorInput(input: TutorInput) {
-        _tutorInput.value = input // O usar _tutorInput.update { input }
+        _tutorInput.value = input
     }
 
     // ------------------- LÓGICA CONDICIONAL (useEffect dependiente de servicio.tipo) -------------------
@@ -182,8 +188,7 @@ class SchedulingViewModel(
     // ------------------- TRANSACCIÓN FINAL (submitServicio en React) -------------------
 
     fun submitRegistration() {
-        // Aquí podrías agregar las validaciones (errorsMascota, errorsTutor, etc.)
-        // Si la validación falla, sales con un return.
+
 
         viewModelScope.launch {
             _loading.value = true

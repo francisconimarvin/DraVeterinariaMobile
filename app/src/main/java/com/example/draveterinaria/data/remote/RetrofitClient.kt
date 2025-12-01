@@ -6,6 +6,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import kotlin.getValue
 
+//  ==================== NOTA ====================== \\
+// SE DEBE USAR LA IP 10.0.2.2 PARA CORRER EN EL EMULADOR
+// LA IP DEBE SER CORRESPONDIENTE A LA DEL SERVIDOR EN EJECUCIÓN
 private const val IP_ADDRESS = "http://192.168.0.147"
 
 object RetrofitClient {

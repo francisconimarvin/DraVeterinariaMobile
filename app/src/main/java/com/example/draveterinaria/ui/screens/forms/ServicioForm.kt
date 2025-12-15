@@ -6,8 +6,17 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.draveterinaria.data.model.*
-import com.example.draveterinaria.ui.components.DropdownSelector // Necesitarás este componente
-
+import com.example.draveterinaria.ui.components.DropdownSelector
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.ZoneId
+import java.util.Date
+import java.util.Locale
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ServicioForm(
     servicioInput: ServicioInput,
@@ -45,13 +54,86 @@ fun ServicioForm(
             )
 
 
+            // ---------- Fecha del Servicio (solo futuras) ----------
+            var showDatePicker by remember { mutableStateOf(false) }
+            var fechaError by remember { mutableStateOf<String?>(null) }
+
+            val today = System.currentTimeMillis()
+
+            val datePickerState = rememberDatePickerState(
+                selectableDates = object : SelectableDates {
+                    override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+                        return utcTimeMillis >= today
+                    }
+                }
+            )
+
             OutlinedTextField(
                 value = servicioInput.fecha,
-                onValueChange = onFechaChange,
-                label = { Text("Fecha (YYYY-MM-DD)") },
+                onValueChange = {},
+                readOnly = true,
+                label = { Text("Fecha del Servicio") },
                 modifier = Modifier.fillMaxWidth(),
-                enabled = !isLoading
+                enabled = !isLoading,
+                isError = fechaError != null,
+                trailingIcon = {
+                    IconButton(
+                        onClick = { showDatePicker = true },
+                        enabled = !isLoading
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.DateRange,
+                            contentDescription = "Seleccionar fecha"
+                        )
+                    }
+                }
             )
+
+            if (fechaError != null) {
+                Text(
+                    text = fechaError!!,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
+
+            if (showDatePicker && !isLoading) {
+                DatePickerDialog(
+                    onDismissRequest = { showDatePicker = false },
+                    confirmButton = {
+                        TextButton(
+                            onClick = {
+                                datePickerState.selectedDateMillis?.let { millis ->
+                                    if (millis < today) {
+                                        fechaError = "Solo se permiten fechas futuras"
+                                    } else {
+                                        val formatter = SimpleDateFormat(
+                                            "yyyy-MM-dd",
+                                            Locale.getDefault()
+                                        )
+
+                                        val fecha = formatter.format(Date(millis))
+
+                                        fechaError = null
+                                        onFechaChange(fecha)
+                                    }
+                                }
+                                showDatePicker = false
+                            }
+
+                        ) {
+                            Text("Aceptar")
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { showDatePicker = false }) {
+                            Text("Cancelar")
+                        }
+                    }
+                ) {
+                    DatePicker(state = datePickerState)
+                }
+            }
 
             // Costo/Precio
             Text("Costo del Servicio: $${servicioInput.precio}",

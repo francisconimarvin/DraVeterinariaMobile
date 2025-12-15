@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import com.example.draveterinaria.utils.EmailValidator
 
 
-private val RUT_REGEX = Regex("^\\d{1,2}\\.\\d{3}\\.\\d{3}-[0-9Kk]\$")
+private val RUT_REGEX = Regex("^\\d{1,9}-[0-9Kk]$")
 class SchedulingViewModel(
     private val repository: SchedulingRepository = SchedulingRepository(),
     private val emailValidator: EmailValidator

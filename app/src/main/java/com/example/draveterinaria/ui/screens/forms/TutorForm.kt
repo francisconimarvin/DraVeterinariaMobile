@@ -28,7 +28,7 @@ fun TutorForm(
             OutlinedTextField(
                 value = tutorInput.rut,
                 onValueChange = { onValueChange(tutorInput.copy(rut = it)) },
-                label = { Text("RUT (Ej: 12345678-9)") },
+                label = { Text("RUT Sin puntos y con guión") },
                 modifier = Modifier.fillMaxWidth(),
                 isError = errors.containsKey("rut")
             )
@@ -94,7 +94,7 @@ fun TutorForm(
             // Email
             OutlinedTextField(
                 value = tutorInput.email,
-                onValueChange = { onValueChange(tutorInput.copy(email = it)) },
+                onValueChange = { onValueChange(tutorInput.copy(email = it.trim())) },
                 label = { Text("Email") },
                 modifier = Modifier.fillMaxWidth(),
                 isError = errors.containsKey("email")

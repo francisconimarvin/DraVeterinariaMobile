@@ -71,15 +71,15 @@ class MainViewModel(
                             LoginState.Error("Respuesta vacía del servidor.")
                     }
                 } else {
-<<<<<<< HEAD
+
                     val errorMsg =
                         response.errorBody()?.string() ?: "Credenciales inválidas."
                     _loginStatus.value = LoginState.Error(errorMsg)
-=======
+
                     val errorBody = response.errorBody()?.string()
                     val message = parseErrorMessage(errorBody)
                     _loginStatus.value = LoginState.Error(message)
->>>>>>> 6bcf354cef87036de8edf2f47be8f04be8852b21
+
                 }
             } catch (e: Exception) {
                 _loginStatus.value = LoginState.Error(

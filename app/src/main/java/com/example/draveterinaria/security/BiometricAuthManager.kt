@@ -9,14 +9,6 @@ class BiometricAuthManager(
     private val activity: FragmentActivity
 ) {
 
-    fun canAuthenticate(): Boolean {
-        val biometricManager = BiometricManager.from(activity)
-        return biometricManager.canAuthenticate(
-            BiometricManager.Authenticators.BIOMETRIC_STRONG or
-                    BiometricManager.Authenticators.DEVICE_CREDENTIAL
-        ) == BiometricManager.BIOMETRIC_SUCCESS
-    }
-
     fun authenticate(
         onSuccess: () -> Unit,
         onError: (String) -> Unit

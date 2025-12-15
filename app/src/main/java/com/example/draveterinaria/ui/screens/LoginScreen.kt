@@ -50,13 +50,10 @@ fun LoginScreen(
     // Lanzar animación y navegación cuando login es exitoso
     LaunchedEffect(loginState) {
         if (loginState is LoginState.Success) {
-            showSuccessAnim = true
-            delay(2000) // duración de animación
-            navController.navigate(Screen.Home.route) {
+            navController.navigate(Screen.DeviceAuth.route) {
                 popUpTo(Screen.Login.route) { inclusive = true }
             }
             viewModel.resetLoginStatus()
-            showSuccessAnim = false
         }
     }
 

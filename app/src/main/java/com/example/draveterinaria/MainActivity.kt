@@ -17,6 +17,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -31,13 +32,14 @@ import com.example.draveterinaria.viewModels.MainViewModel
 import com.example.draveterinaria.viewModels.SchedulingViewModel
 import com.example.draveterinaria.ui.theme.DraVeterinariaTheme
 import kotlinx.coroutines.flow.collectLatest
+import com.example.draveterinaria.ui.screens.DeviceAuthScreen
 
 import com.example.draveterinaria.data.repository.SchedulingRepository
 import com.example.draveterinaria.utils.AndroidEmailValidator
 import com.example.draveterinaria.viewModels.SchedulingViewModelFactory
 
 
-class MainActivity : ComponentActivity() {
+class MainActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -87,6 +89,9 @@ class MainActivity : ComponentActivity() {
                     ) {
                         composable(Screen.Login.route) {
                             LoginScreen(navController = navController, viewModel = viewModel)
+                        }
+                        composable(Screen.DeviceAuth.route) {
+                            DeviceAuthScreen(navController, viewModel)
                         }
                         composable(Screen.Home.route) {
                             HomeScreen(navController = navController, viewModel = viewModel)

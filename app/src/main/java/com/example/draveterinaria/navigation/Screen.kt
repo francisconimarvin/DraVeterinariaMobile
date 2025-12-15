@@ -4,6 +4,8 @@ sealed class Screen(val route:String) {
 
     data object Login : Screen("login_page")
 
+    data object DeviceAuth : Screen("device_auth")
+
     data object Home : Screen("home_page")
 
     data object Profile : Screen("profile_page")

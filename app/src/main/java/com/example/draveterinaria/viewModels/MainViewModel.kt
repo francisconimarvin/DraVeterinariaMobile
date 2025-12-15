@@ -26,12 +26,12 @@ sealed class LoginState {
 // MainViewModel
 // ----------------------
 class MainViewModel(
-    private val secureStorage: SecureStorage,
+
     application: Application
 ) : AndroidViewModel(application) {
 
-
-
+    // --- Storage seguro ---
+    private val secureStorage = SecureStorage(application)
 
     // --- Navegación ---
     private val _navigationEvents = MutableSharedFlow<NavigationEvent>()

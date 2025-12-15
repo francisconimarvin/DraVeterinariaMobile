@@ -1,25 +1,35 @@
 package com.example.draveterinaria.viewModels
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.draveterinaria.data.local.SecureStorage
+import com.example.draveterinaria.data.model.LoginRequest
+import com.example.draveterinaria.data.remote.RetrofitClient
 import com.example.draveterinaria.navigation.NavigationEvent
 import com.example.draveterinaria.navigation.Screen
-import com.example.draveterinaria.data.model.LoginRequest
-import com.example.draveterinaria.data.model.LoginResponse
-import com.example.draveterinaria.data.remote.RetrofitClient
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-// Clase sellada para representar los estados posibles del Login
+// ----------------------
+// Estados de Login
+// ----------------------
 sealed class LoginState {
     object Idle : LoginState()
     object Loading : LoginState()
-    // La respuesta final debe contener el token y el rol
     data class Success(val token: String, val role: String) : LoginState()
     data class Error(val message: String) : LoginState()
 }
 
-class MainViewModel : ViewModel() {
+// ----------------------
+// MainViewModel
+// ----------------------
+class MainViewModel(
+    application: Application
+) : AndroidViewModel(application) {
+
+    // --- Storage seguro ---
+    private val secureStorage = SecureStorage(application)
 
     // --- Navegación ---
     private val _navigationEvents = MutableSharedFlow<NavigationEvent>()
@@ -29,54 +39,67 @@ class MainViewModel : ViewModel() {
     private val _loginStatus = MutableStateFlow<LoginState>(LoginState.Idle)
     val loginStatus: StateFlow<LoginState> = _loginStatus.asStateFlow()
 
-
-    /**
-     * Intenta iniciar sesión con el email y la contraseña.
-     * Gestiona el estado de carga, éxito y error.
-     */
+    // ----------------------
+    // LOGIN
+    // ----------------------
     fun performLogin(email: String, password: String) {
-        // Evita doble clic o múltiples peticiones
+
         if (_loginStatus.value == LoginState.Loading) return
 
         _loginStatus.value = LoginState.Loading
 
         viewModelScope.launch {
             try {
-                val request = LoginRequest(email = email, password = password)
-
-                // Llamada al API de Login (puerto 8095, configurado en RetrofitClient)
+                val request = LoginRequest(email, password)
                 val response = RetrofitClient.loginApiService.login(request)
 
                 if (response.isSuccessful) {
                     val body = response.body()
+
                     if (body != null) {
-
                         val jwtToken = body.token
-                        val userRole = body.role
+                        val role = body.role
 
-                        // Emite el token y el rol para que la UI lo guarde y navegue
-                        _loginStatus.value = LoginState.Success(jwtToken, userRole)
+                        // 🔐 Guardar sesión local
+                        secureStorage.saveToken(jwtToken)
+
+                        _loginStatus.value = LoginState.Success(jwtToken, role)
+
                     } else {
-                        _loginStatus.value = LoginState.Error("Respuesta vacía del servidor.")
+                        _loginStatus.value =
+                            LoginState.Error("Respuesta vacía del servidor.")
                     }
                 } else {
-                    // Manejo de errores 401 (Unauthorized) u otros 4xx
-                    val errorBody = response.errorBody()?.string() ?: "Credenciales inválidas."
-                    _loginStatus.value = LoginState.Error(errorBody)
+                    val errorMsg =
+                        response.errorBody()?.string() ?: "Credenciales inválidas."
+                    _loginStatus.value = LoginState.Error(errorMsg)
                 }
             } catch (e: Exception) {
-                // Manejo de errores de conexión (servidor caído, timeout, etc.)
-                _loginStatus.value = LoginState.Error("Error de conexión: ${e.message ?: "Verifique su IP o servidor"}")
+                _loginStatus.value = LoginState.Error(
+                    "Error de conexión: ${e.message ?: "Servidor no disponible"}"
+                )
             }
         }
     }
 
-    /** Permite resetear el estado del login a Idle (para reintentar o limpiar el error). */
     fun resetLoginStatus() {
         _loginStatus.value = LoginState.Idle
     }
 
-    // --- Lógica de Navegación ---
+    // ----------------------
+    // SESIÓN
+    // ----------------------
+    fun hasSession(): Boolean {
+        return secureStorage.getToken() != null
+    }
+
+    fun logout() {
+        secureStorage.clear()
+    }
+
+    // ----------------------
+    // NAVEGACIÓN
+    // ----------------------
     fun navigateTo(screen: Screen) {
         viewModelScope.launch {
             _navigationEvents.emit(NavigationEvent.NavigateTo(route = screen))
@@ -95,4 +118,3 @@ class MainViewModel : ViewModel() {
         }
     }
 }
-

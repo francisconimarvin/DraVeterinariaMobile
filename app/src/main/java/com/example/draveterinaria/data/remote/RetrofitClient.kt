@@ -9,7 +9,7 @@ import kotlin.getValue
 //  ==================== NOTA ====================== \\
 // SE DEBE USAR LA IP 10.0.2.2 PARA CORRER EN EL EMULADOR
 // LA IP DEBE SER CORRESPONDIENTE A LA DEL SERVIDOR EN EJECUCIÓN
-private const val IP_ADDRESS = "http://192.168.0.147"
+private const val IP_ADDRESS = "http://10.0.2.2"
 
 object RetrofitClient {
 

@@ -116,7 +116,7 @@ class SchedulingViewModelTest {
     }
 
     // ===================================================================
-    // PRUEBAS DE VALIDACIÓN DE TUTOR (CORREGIDAS Y USANDO MOCK)
+    // PRUEBAS DE VALIDACIÓN DE TUTOR (USANDO MOCK)
     // ===================================================================
 
     @Test
@@ -125,7 +125,7 @@ class SchedulingViewModelTest {
 
         val validTutor = TutorInput(
             email = "test@ejemplo.com", // Validez controlada por el mock
-            rut = "12.345.678-9",
+            rut = "12345678-9",
             nombre = "Juan",
             snombre = "", // Añadido
             apaterno = "Perez",
@@ -144,7 +144,7 @@ class SchedulingViewModelTest {
         // El email falla porque el mock devuelve 'false' para "email_invalido"
         val invalidTutor = TutorInput(
             email = "email_invalido", // Falla (Mock devuelve false)
-            rut = "12345678-9",       // Falla (le faltan los puntos para la RUT_REGEX estricta)
+            rut = "12345679",       // Falla (le faltan los puntos para la RUT_REGEX estricta)
             nombre = "",              // Falla
             snombre = "",
             apaterno = "",            // Falla

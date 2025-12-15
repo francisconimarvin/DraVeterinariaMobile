@@ -22,7 +22,5 @@ interface LoginApiService {
         @Body request: LoginRequest
     ): Response<LoginResponse>
 
-    // Si tuvieras un endpoint de registro en esta misma API:
-    // @POST("/auth/register")
-    // suspend fun register(@Body request: RegisterRequest): Response<RegisterResponse>
+
 }

@@ -26,11 +26,12 @@ sealed class LoginState {
 // MainViewModel
 // ----------------------
 class MainViewModel(
+    private val secureStorage: SecureStorage,
     application: Application
 ) : AndroidViewModel(application) {
 
-    // --- Storage seguro ---
-    private val secureStorage = SecureStorage(application)
+
+
 
     // --- Navegación ---
     private val _navigationEvents = MutableSharedFlow<NavigationEvent>()
@@ -61,7 +62,7 @@ class MainViewModel(
                         val jwtToken = body.token
                         val role = body.role
 
-                        // 🔐 Guardar sesión local
+                        //  Guardar sesión local
                         secureStorage.saveToken(jwtToken)
 
                         _loginStatus.value = LoginState.Success(jwtToken, role)

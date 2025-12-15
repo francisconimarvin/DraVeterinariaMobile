@@ -27,6 +27,6 @@ data class MascotaInput(
 data class ServicioInput(
     val tipoId: Long,
     val subtipoId: Long, // Solo el ID seleccionado
-    val precio: Int, // Puede ser Int o Double, usa el tipo que manejes para el precio
+    val precio: Int,
     val fecha: String
 )

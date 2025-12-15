@@ -9,6 +9,7 @@ import com.example.draveterinaria.data.model.LoginResponse
 import com.example.draveterinaria.data.remote.RetrofitClient
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import com.example.draveterinaria.utils.parseErrorMessage
 
 // Clase sellada para representar los estados posibles del Login
 sealed class LoginState {
@@ -60,9 +61,9 @@ class MainViewModel : ViewModel() {
                         _loginStatus.value = LoginState.Error("Respuesta vacía del servidor.")
                     }
                 } else {
-                    // Manejo de errores 401 (Unauthorized) u otros 4xx
-                    val errorBody = response.errorBody()?.string() ?: "Credenciales inválidas."
-                    _loginStatus.value = LoginState.Error(errorBody)
+                    val errorBody = response.errorBody()?.string()
+                    val message = parseErrorMessage(errorBody)
+                    _loginStatus.value = LoginState.Error(message)
                 }
             } catch (e: Exception) {
                 // Manejo de errores de conexión (servidor caído, timeout, etc.)

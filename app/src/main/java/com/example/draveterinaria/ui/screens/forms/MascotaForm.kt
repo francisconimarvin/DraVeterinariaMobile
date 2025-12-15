@@ -1,5 +1,7 @@
 package com.example.draveterinaria.ui.screens.forms
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -10,7 +12,18 @@ import com.example.draveterinaria.data.model.MascotaInput
 import com.example.draveterinaria.data.model.SEXOS // Asume que esta constante existe
 import com.example.draveterinaria.ui.components.DropdownSelector // Importar el componente
 import com.example.draveterinaria.ui.components.ErrorText // Componente utilitario para errores
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.rememberDatePickerState
+import java.time.Instant
+import java.time.ZoneId
 
+
+
+@RequiresApi(Build.VERSION_CODES.O)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MascotaForm(
     mascotaInput: MascotaInput,
@@ -58,15 +71,60 @@ fun MascotaForm(
             )
             ErrorText(errors, "raza")
 
-            // Fecha de Nacimiento
+            // Fecha de Nacimiento (con calendario)
+            var showDatePicker by remember { mutableStateOf(false) }
+            val datePickerState = rememberDatePickerState()
+
             OutlinedTextField(
                 value = mascotaInput.fechaNacimiento,
-                onValueChange = { onValueChange(mascotaInput.copy(fechaNacimiento = it)) },
-                label = { Text("Fecha Nacimiento (YYYY-MM-DD)") },
+                onValueChange = {},
+                readOnly = true,
+                label = { Text("Fecha de Nacimiento") },
                 modifier = Modifier.fillMaxWidth(),
-                isError = errors.containsKey("fechaNacimiento")
+                isError = errors.containsKey("fechaNacimiento"),
+                trailingIcon = {
+                    IconButton(onClick = { showDatePicker = true }) {
+                        Icon(
+                            imageVector = Icons.Default.DateRange,
+                            contentDescription = "Seleccionar fecha"
+                        )
+                    }
+                }
             )
+
             ErrorText(errors, "fechaNacimiento")
+
+            if (showDatePicker) {
+                DatePickerDialog(
+                    onDismissRequest = { showDatePicker = false },
+                    confirmButton = {
+                        TextButton(
+                            onClick = {
+                                datePickerState.selectedDateMillis?.let { millis ->
+                                    val fecha = Instant.ofEpochMilli(millis)
+                                        .atZone(ZoneId.systemDefault())
+                                        .toLocalDate()
+                                        .toString() // YYYY-MM-DD
+
+                                    onValueChange(
+                                        mascotaInput.copy(fechaNacimiento = fecha)
+                                    )
+                                }
+                                showDatePicker = false
+                            }
+                        ) {
+                            Text("Aceptar")
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { showDatePicker = false }) {
+                            Text("Cancelar")
+                        }
+                    }
+                ) {
+                    DatePicker(state = datePickerState)
+                }
+            }
 
             // Sexo
             DropdownSelector(

@@ -1,9 +1,13 @@
 package com.example.draveterinaria
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import android.os.Build
+import androidx.compose.ui.platform.LocalContext
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -114,4 +118,21 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun GeneralPreview() {
     DraVeterinariaTheme {  }
+}
+
+@Composable
+fun RequestNotificationPermission() {
+
+    val context = LocalContext.current
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+
+        val launcher = rememberLauncherForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) {}
+
+        LaunchedEffect(Unit) {
+            launcher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+        }
+    }
 }

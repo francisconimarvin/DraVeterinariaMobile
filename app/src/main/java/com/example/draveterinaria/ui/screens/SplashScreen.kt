@@ -19,7 +19,7 @@ fun SplashScreen(
 
     LaunchedEffect(Unit) {
 
-        // 1️⃣ No hay sesión → Login
+
         if (!viewModel.hasSession()) {
             navController.navigate("login") {
                 popUpTo("splash") { inclusive = true }
@@ -27,7 +27,7 @@ fun SplashScreen(
             return@LaunchedEffect
         }
 
-        // 2️⃣ El dispositivo NO está protegido → bloquear
+
         if (!DeviceSecurityUtils.hasDeviceCredential(context)) {
             navController.navigate("login") {
                 popUpTo("splash") { inclusive = true }
@@ -35,7 +35,7 @@ fun SplashScreen(
             return@LaunchedEffect
         }
 
-        // 3️⃣ Autenticación (biometría o PIN)
+
         biometric.authenticate(
             onSuccess = {
                 navController.navigate("home") {
